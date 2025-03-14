@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Quizera - A Ride through the Mind</title>
+     <link rel="stylesheet" href="Style/styles.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <img src="Images/img.png" alt="">
+            <h2 class="text-right">Welcome</h2>
+        
+            <div class="form-wrapper login">
+                <form action="Login.php" method="post" >
+                    <h2>Login</h2>
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="mail"></ion-icon>
+                        </span>
+                        <input type="email" placeholder="Email" class="email" name="email" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="lock-closed"></ion-icon>
+                        </span>
+                        <input type="password" placeholder="Password" name="pwd" class="pwd" required>
+                    </div>
+                    <button type="submit" >Login</button>
+                    <div class="sign-link">
+                        <p>Don't have an account? <a href="assests/register.html">Register</a></p>
+                    </div>
+                </form>
+                 <textarea id="messageTextArea"  class="messageTextArea"hidden></textarea>
+            </div>
+        
+        
+        
+
+    </body>
+</html>
