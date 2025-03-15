@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <link rel="stylesheet" href="../Style/GamePage.css">
+</head>
+<body>
+    <!-- Close button -->
+    <img id="close-button" src="../Images/close.png" alt="Close">  
+    <br><br><br><br><br>
+    <!-- User Info -->
+    <div id="username"></div>
+    <div id="score">Score: 0</div>
+
+    <!-- Timer -->
+    <p id="timer">Time Left: <span id="time-left">0</span> sec</p>
+    <br>
+    
+    <!-- Quiz Container -->
+    <div id="quiz-container">
+        <img id="quiz-image" src="" alt="Quiz Image">
+    </div>
+
+    <br><br><br><br><br>
+
+    <!-- Answer Input & Button -->
+    <div id="answer-container">
+        <input type="number" id="answer" placeholder="Enter your answer" min="0" max="9">
+        <button id="submit-answer">Submit</button>
+    </div>
+    <br><br>
+    <!-- New Game Text -->
+    <span id="new-game" class="clickable-text">New Game</span>  
+
+    <script src="../Js/GamePage.js"></script>
+</body>
+</html>
