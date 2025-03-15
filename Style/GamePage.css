@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap');
+
+
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: lightgreen;
+    background: url("../Images/GameArea1.png") no-repeat center top; 
+    background-size: 650px 800px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Quiz Container */
+#quiz-container {
+    background: white;
+    padding: 10px;  /* Your original value */
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 8px;  /* Your original value */
+    margin-left: -20px; /* Shift container 20px to the left (adjust as needed) */
+    position: relative;
+    width: 30%;  /* Your original value */
+    text-align: center;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-height: 220px; /* Ensures space for quiz image */
+}
+
+
+/* Ensuring Quiz Image Loads Without Moving Other Elements */
+#quiz-image {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+
+    min-height: 180px; /* Prevents layout shifting */
+}
+
+/* Timer Styling */
+#timer {
+    font-size: 24px;
+    font-weight: bold;
+    color: red;
+    margin-top: 10px;
+}
+
+/* Score & Username */
+#score, #username {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Answer Input & Container */
+#answer-container {
+    margin-top: 10px; /* Your original value */
+}
+
+/* Answer Input Field */
+#answer {
+    font-size: 18px;
+    padding: 5px;
+    width: 180px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+/* Submit Button - Oval Shaped with Ilisim Font */
+#submit-answer {
+    font-size: 18px;
+    padding: 10px 30px; /* Oval shape */
+    border: none;
+    border-radius: 50px; /* Makes it oval */
+    background-color: #441217; /* Green color */
+    color: white;
+    font-family: 'Irish Grover', sans-serif;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* Hover Effect */
+#submit-answer:hover {
+    background-color: #693e45;
+}
+
+/* Clickable 'New Game' Text */
+.clickable-text {
+    font-size: 25px;
+    color: rgb(84, 104, 17);
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+    font-family: 'Ilisim', sans-serif;
+    margin-top: 10px; /* Your original value */
+}
+
+/* Close Button */
+#close-button {
+    position: absolute;
+    top: 10px;
+    right: 500px;
+    width: 40px;
+    cursor: pointer;
+}
+
+/* Prevent Button from Moving when Image Loads */
+#answer-container, #submit-answer, #new-game {
+    position: relative;
+}
