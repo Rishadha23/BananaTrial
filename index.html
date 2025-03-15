@@ -1,41 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Quizera - A Ride through the Mind</title>
-     <link rel="stylesheet" href="Style/styles.css">
-    </head>
-    <body>
-        <div class="wrapper">
-            <img src="Images/img.png" alt="">
-            <h2 class="text-right">Welcome</h2>
-        
-            <div class="form-wrapper login">
-                <form action="Login.php" method="post" >
-                    <h2>Login</h2>
-                    <div class="input-box">
-                        <span class="icon">
-                            <ion-icon name="mail"></ion-icon>
-                        </span>
-                        <input type="email" placeholder="Email" class="email" name="email" required>
-                    </div>
-                    <div class="input-box">
-                        <span class="icon">
-                            <ion-icon name="lock-closed"></ion-icon>
-                        </span>
-                        <input type="password" placeholder="Password" name="pwd" class="pwd" required>
-                    </div>
-                    <button type="submit" >Login</button>
-                    <div class="sign-link">
-                        <p>Don't have an account? <a href="assests/register.html">Register</a></p>
-                    </div>
-                </form>
-                 <textarea id="messageTextArea"  class="messageTextArea"hidden></textarea>
-            </div>
-        
-        
-        
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizera - Welcomes you to the Game</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Set the background image and make sure it covers the entire screen */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f9f9f9;
+            background: url("Images/Homebg.png") no-repeat center center ;
+            background-size: 700px 750px;
+        }
 
-    </body>
+         /* Center and stack buttons one below another */
+         .button-container {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            gap: 30px; /* Controls the gap between buttons */
+        }
+
+        .button-container a {
+            text-decoration: none;
+        }
+
+       
+
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            top: 150px;
+            cursor: pointer;
+            background-color: rgba(241, 9, 59, 0.6); /* Semi-transparent background */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-family: 'Irish Grover', cursive; /* Apply the Irish Grover font */
+            font-size: 20px;
+        }
+
+        /* Hover effect for buttons */
+        button:hover {
+            background-color: rgba(105, 59, 59, 0.186);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="button-container">
+        <button onclick="window.location.href = 'Services/Login.html';">Play Game</button>
+        <button onclick="window.location.href = 'Services/Register.php';">Register</button>
+    </div>
+
+</body>
 </html>
