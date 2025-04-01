@@ -1,12 +1,13 @@
 <?php
-session_start();
-require "config.php";
+session_start();  // Start the session to access session data
+require "config.php";  // Your database connection settings
 
 // Enable error reporting for debugging
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'] ?? '';
+    // Get the username from session
+    $username = $_SESSION['username'] ?? '';  // Username stored in session
     $score = $_POST['score'] ?? 0;
 
     // Validate input
@@ -17,16 +18,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if the user exists
     $sql = "SELECT * FROM user WHERE username = ?";
-    $stmt2 = $conn->prepare($sql);
-    $stmt2->bind_param("s", $username);
-    $stmt2->execute();
-    $result = $stmt2->get_result();
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         // User exists, update score
         $sql = "UPDATE user SET score = ? WHERE username = ?";
-        $stmt2 = $conn->prepare($sql);
-        $stmt2->bind_param("is", $score, $username);
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("is", $score, $username);
 
         if ($stmt->execute()) {
             echo json_encode(["status" => "success", "message" => "Score updated successfully"]);
@@ -38,8 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(["status" => "error", "message" => "User does not exist"]);
     }
 
-    $stmt2->close();
-
+    $stmt->close();
 } else {
     echo json_encode(["status" => "error", "message" => "Invalid request method"]);
 }
