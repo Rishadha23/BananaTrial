@@ -1,14 +1,3 @@
-/* Set a background image for the main page 
-body {
-    background: url('../Images/MenuBg.png') no-repeat center center fixed;
-    background-size: cover;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    color: white;
-}
-*/
-
-
 
 
 body {
@@ -39,6 +28,7 @@ body {
     text-align: center;
     background: url("../Images/Modalbg.png") no-repeat center top; 
     background-size: 500px 400px; /* Match the image size */
+
     /* Set the modal width height same as image */
     width: 500px;  
     height: 400px; 
@@ -64,7 +54,7 @@ body {
     cursor: pointer;
 }
 
-/* General styles for clickable text */
+/* Common style  for all the clickable text */
 .clickable-text {
     cursor: pointer;
     font-size: 40px;

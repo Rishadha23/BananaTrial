@@ -16,13 +16,13 @@ body {
 /* Quiz Container */
 #quiz-container {
     background: white;
-    padding: 10px;  /* Your original value */
+    padding: 10px;  
     border-radius: 10px;
     display: inline-block;
-    margin-top: 8px;  /* Your original value */
-    margin-left: -20px; /* Shift container 20px to the left (adjust as needed) */
+    margin-top: 8px;  
+    margin-left: -20px;
     position: relative;
-    width: 30%;  /* Your original value */
+    width: 30%;  
     text-align: center;
     height: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -56,7 +56,7 @@ body {
 
 /* Answer Input & Container */
 #answer-container {
-    margin-top: 10px; /* Your original value */
+    margin-top: 10px; 
 }
 
 /* Answer Input Field */
@@ -69,13 +69,13 @@ body {
     border: 2px solid black;
 }
 
-/* Submit Button - Oval Shaped with Ilisim Font */
+/* Submit Button  */
 #submit-answer {
     font-size: 18px;
     padding: 10px 30px; /* Oval shape */
     border: none;
     border-radius: 50px; /* Makes it oval */
-    background-color: #441217; /* Green color */
+    background-color: #441217; 
     color: white;
     font-family: 'Irish Grover', sans-serif;
     cursor: pointer;
@@ -97,7 +97,7 @@ body {
     cursor: pointer;
     display: block;
     font-family: 'Ilisim', sans-serif;
-    margin-top: 10px; /* Your original value */
+    margin-top: 10px; 
 }
 
 /* Close Button */
