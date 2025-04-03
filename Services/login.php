@@ -33,9 +33,10 @@ if ($stmt->num_rows > 0) {
             "score" => $db_score         // Send score directly to the client
         ]);
 
-        // Also set cookies with the session data (optional if you want cookies)
-        setcookie("username", $db_username, time() + 3600, "/");  // expires in 1 hour
-        setcookie("score", $db_score, time() + 3600, "/");          // expires in 1 hour
+        // Also set cookies with the session data 
+        setcookie("username", $db_username, 0,"/");  // expires as user closes browser
+        setcookie("score", $db_score, 0,"/"); 
+        /*setcookie("score", $db_score, time() + 3600, "/");         // expires in 1 hour */
     } else {
         // Password is incorrect
         echo json_encode(["success" => false, "message" => "Incorrect password"]);

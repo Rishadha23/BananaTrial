@@ -1,13 +1,13 @@
 <?php
-session_start();  // Start the session to access session data
-require "config.php";  // Your database connection settings
+session_start();  
+require "config.php";  
 
 // Enable error reporting for debugging
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the username from session
-    $username = $_SESSION['username'] ?? '';  // Username stored in session
+    $username = $_SESSION['username'] ?? '';  
     $score = $_POST['score'] ?? 0;
 
     // Validate input
