@@ -11,8 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Get the username and score from cookies
     let username = getCookie("username");
     if (!username) {
-        alert("Error: Username not found. Please log in first.");
-        window.location.href = "login.html";
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Username not found. Please log in first.',
+        }).then(() => {
+            window.location.href = "../assests/login.html";
+        });
         return;
     }
     document.getElementById("username").textContent = "Username: " + username;
@@ -20,8 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let score = parseInt(getCookie("score")) || 0;
     document.getElementById("score").textContent = "Score: " + score;
 
-    let difficulty = getCookie("difficulty") || "medium";
-    let timeLimit = difficulty === "hard" ? 20 : difficulty === "medium" ? 40 : 60;
     let timer, correctAnswer = 0, quizImageURL = "", timeExpired = false;
 
     // Fetch quiz image and answer
@@ -46,6 +49,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Start quiz function
     async function startQuiz() {
+        // Read the difficulty from sessionStorage every time the function is called.
+        let difficulty = sessionStorage.getItem("difficulty") || "Medium";
+        let timeLimit = difficulty === "Hard" ? 20 : difficulty === "Medium" ? 40 : 60;
+
+        console.log("Start Quiz - Difficulty:", difficulty, "Time Limit:", timeLimit); 
+
         clearInterval(timer); // Reset the previous timer
         timeExpired = false;  // Reset timeExpired flag
         document.getElementById("answer").value = "";  // Clear the previous answer input
@@ -63,13 +72,19 @@ document.addEventListener("DOMContentLoaded", function () {
             if (timeLimit <= 0) {
                 clearInterval(timer);  // Stop the timer
                 timeExpired = true;  // Mark time as expired
-                alert("Time's up! The correct answer was " + correctAnswer);
-
-                // Reset timer and prepare for the next round after user acknowledges the alert
-                setTimeout(() => {
-                    timeLimit = difficulty === "hard" ? 20 : difficulty === "medium" ? 40 : 60;  // Reset the time limit based on difficulty
-                    startQuiz();  // Start a new round with a new image and timer
-                }, 500);
+                Swal.fire({
+                    icon: 'error',
+                    title: "Time's up!",
+                    text: 'The correct answer was ' + correctAnswer,
+                }).then(() => {
+                    // Reset timer and prepare for the next round after user acknowledges the alert
+                    setTimeout(() => {
+                        let difficulty = sessionStorage.getItem("difficulty") || "Medium";
+                        timeLimit = difficulty === "Hard" ? 20 : difficulty === "Medium" ? 40 : 60;  
+                        console.log("Timeout - Difficulty:", difficulty, "Time Limit:", timeLimit); 
+                        startQuiz();  
+                    }, 500);
+                });
             }
         }, 1000);
     }
@@ -82,44 +97,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Validate user input
         if (userAnswer === "" || isNaN(userAnswer) || userAnswer < 0 || userAnswer > 9) {
-            alert("Please enter a valid number between 0 and 9.");
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Answer',
+                text: 'Please enter a valid number between 0 and 9.',
+            });
             return;
         }
 
         // Check if answer is correct
         if (parseInt(userAnswer) === correctAnswer) {
-            alert("Correct! You earned 10 points.");
-            score += 10;
-            document.cookie = `score=${score}; path=/`;  // Update score in cookies
-            document.getElementById("score").textContent = "Score: " + score;
+            Swal.fire({
+                icon: 'success',
+                title: 'Correct!',
+                text: 'You earned 10 points.',
+            }).then(() => {
+                score += 10;
+                document.cookie = `score=${score}; path=/`;  // Update score in cookies
+                document.getElementById("score").textContent = "Score: " + score;
 
-            // Update score in the database
-            fetch("../Services/update_score.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `username=${username}&score=${score}`
+                // Update score in the database
+                fetch("../Services/update_score.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `username=${username}&score=${score}`
+                });
+
+                // Reset the timer and start a new quiz after correct answer
+                setTimeout(() => {
+                    let difficulty = sessionStorage.getItem("difficulty") || "Medium";
+                    timeLimit = difficulty === "Hard" ? 20 : difficulty === "Medium" ? 40 : 60;  
+                    startQuiz();  
+                }, 500);
             });
-
-            // Reset the timer and start a new quiz after correct answer
-            setTimeout(() => {
-                timeLimit = difficulty === "hard" ? 20 : difficulty === "medium" ? 40 : 60;  // Reset the time limit based on difficulty
-                startQuiz();  // Start a new round with a new image and timer
-            }, 500);
         } else {
-            alert("Incorrect! Try again.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Incorrect!',
+                text: 'Try again.',
+            });
         }
     });
 
     // Handle new game request
-    document.getElementById("new-game").addEventListener("click", function () {
-        timeExpired = false;  // Reset time expired flag
-        timeLimit = difficulty === "hard" ? 20 : difficulty === "medium" ? 40 : 60;  // Reset timer based on difficulty
-        startQuiz();  // Start a new game
+    document.getElementById("newgame").addEventListener("click", function () {
+        timeExpired = false;  
+        let difficulty = sessionStorage.getItem("difficulty") || "Medium";
+        timeLimit = difficulty === "Hard" ? 20 : difficulty === "Medium" ? 40 : 60;  
+        console.log("New Game - Difficulty:", difficulty, "Time Limit:", timeLimit); 
+        startQuiz();  
     });
 
     // Handle close button click
     document.getElementById("close-button").addEventListener("click", function () {
-        window.location.href = "../index.html";  // Navigate back to the main page
+        window.location.href = "../assests/MainMenu.html";  
     });
 
     startQuiz();  // Start the first quiz when the page loads

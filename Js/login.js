@@ -1,26 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
+    
     const loginForm = document.querySelector("form");
 
     loginForm.addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent default form submission
 
-        // Get input values
         const emailInput = document.querySelector("input[name='email']");
         const passwordInput = document.querySelector("input[name='pwd']");
-
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
         // Validate email format
         if (!validateEmail(email)) {
-            alert("Please enter a valid email address.");
+            showAlert("Please enter a valid email address.", "error");
             emailInput.focus();
             return;
         }
 
         // Validate password (ensure it's not empty)
         if (password.length === 0) {
-            alert("Password cannot be empty.");
+            showAlert("Password cannot be empty.", "error");
             passwordInput.focus();
             return;
         }
@@ -32,44 +31,22 @@ document.addEventListener("DOMContentLoaded", function () {
             method: "POST",
             body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Server returned an error');
-            }
-        
-            const contentType = response.headers.get("Content-Type");
-            if (contentType && contentType.includes("application/json")) {
-                return response.json();  // Parse JSON directly if it's a valid JSON response
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showAlert("Login successful!", "success", () => {
+                    window.location.href = "../assests/MainMenu.html";
+                });
             } else {
-                return response.text();  // Return as text if not JSON
+                showAlert(data.message || "Login failed! Please check your credentials.", "error");
             }
         })
-        .then(text => {
-            // Check if we have text but no JSON (in case of HTML or plain text)
-            if (typeof text === "string") {
-                console.log("Raw Response from Server:", text);
-                alert("Server returned unexpected response: " + text);
-                return;
-            }
-        
-            // Now proceed to handle the valid JSON response
-            if (text.success) {
-                alert("Login successful!");
-                window.location.href = "../assests/GamePage.html";
-            } else {
-                alert(text.message || "Login failed! Please check your credentials.");
-            }
-        })
-        .catch(error => {
-            console.error("Fetch Error:", error);
-            alert("There was an issue with the request. Please try again.");
+        .catch(() => {
+            showAlert("There was an issue with the request. Please try again.", "error");
         });
-        
-        
+    });
 
-    }); // <-- Closing bracket for the 'submit' event listener
-
-    // ** Additional Event Listeners **
+    /**********  Additional Event Listeners *************/
 
     // Enter Key Press - Submits form when pressing 'Enter'
     document.addEventListener("keypress", function (event) {
@@ -102,9 +79,26 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ** Helper Function: Email Validation **
+     /* Helper Function: Email Validation */
     function validateEmail(email) {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailPattern.test(email);
     }
-}); // <-- Closing bracket for the 'DOMContentLoaded' event listener
+
+    /* SweetAlert2 Function for Pop-up Messages */
+    function showAlert(message, type = "info", callback = null) {
+        Swal.fire({
+            title: message,
+            icon: type,
+            timer: 3000,
+            showConfirmButton: false,
+            background: type === "success" ? "#d4edda" : type === "error" ? "#f8d7da" : "#cce5ff",
+            color: type === "success" ? "#155724" : type === "error" ? "#721c24" : "#004085",
+            customClass: {
+                popup: "custom-swal"
+            }
+        }).then(() => {
+            if (callback) callback();
+        });
+    }
+});

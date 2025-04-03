@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Close button event
     document.getElementById("closeBtn").addEventListener("click", function () {
-        window.location.href = "../assests/MainMenu.html"; // Change to your main menu URL
+        window.location.href = "../assests/MainMenu.html"; 
     });
 });
-
+//Take data from php and store it into array
 function fetchLeaderboard() {
     fetch("../Services/scoreboard.php")
         .then(response => response.json())

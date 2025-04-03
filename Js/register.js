@@ -11,29 +11,45 @@ document.addEventListener("DOMContentLoaded", function () {
         // Validate email format
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(email.value)) {
-            alert("Invalid email format!");
+            Swal.fire({
+                title: "Invalid email format!",
+                icon: "error",
+                showConfirmButton: true
+            });
             return;
         }
 
         // Validate username (at least 3 characters)
         if (username.value.length < 3) {
-            alert("Username must be at least 3 characters long!");
+            Swal.fire({
+                title: "Username must be at least 3 characters long!",
+                icon: "error",
+                showConfirmButton: true
+            });
             return;
         }
 
         // Validate password (at least 6 characters)
         if (password.value.length < 6) {
-            alert("Password must be at least 6 characters long!");
+            Swal.fire({
+                title: "Password must be at least 6 characters long!",
+                icon: "error",
+                showConfirmButton: true
+            });
             return;
         }
 
         // Confirm passwords match
         if (password.value !== cpassword.value) {
-            alert("Passwords do not match!");
+            Swal.fire({
+                title: "Passwords do not match!",
+                icon: "error",
+                showConfirmButton: true
+            });
             return;
         }
 
-        // If all checks pass, send data to register.php
+        // If only  all checks pass, send data to register.php
         const formData = new FormData(form);
 
         fetch("../Services/register.php", {
@@ -43,10 +59,19 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert("Registration successful!");
-                window.location.href = "login.html"; // Redirect to login page
+                Swal.fire({
+                    title: "Registration successful!",
+                    icon: "success",
+                    showConfirmButton: true
+                }).then(() => {
+                    window.location.href = "login.html"; 
+                });
             } else {
-                alert("Error: " + data.message);
+                Swal.fire({
+                    title: "Error: " + data.message,
+                    icon: "error",
+                    showConfirmButton: true
+                });
             }
         })
         .catch(error => console.error("Error:", error));

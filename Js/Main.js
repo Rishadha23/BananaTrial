@@ -3,12 +3,12 @@ document.addEventListener("DOMContentLoaded", function() {
     var closeBtn = document.querySelector(".close");
 
 
-    // Open modal before starting a new game if difficulty is not set
+    // To open modal before starting a new game if difficulty is not set
     document.getElementById("newGame").addEventListener("click", function() {
         if (!sessionStorage.getItem("difficulty")) {
             modal.style.display = "block";
         } else {
-            window.location.href = "../assests/GamePage.html"; // Redirect directly if difficulty exists
+            window.location.href = "../assests/GamePage.html"; 
         }
     });
 
@@ -30,21 +30,21 @@ document.addEventListener("DOMContentLoaded", function() {
             var selectedDifficulty = event.target.getAttribute("data-difficulty");
             sessionStorage.setItem("difficulty", selectedDifficulty);
             modal.style.display = "none";
-            window.location.href = "gamepage.html"; // Redirect to game page
+            window.location.href = "../assests/MainMenu.html"; 
         }
     });
 
-    // Other navigation links
+    //navigation links for the buttton texts 
     document.getElementById("level").addEventListener("click", function() {
-        modal.style.display = "block"; // Open modal to change difficulty
+        modal.style.display = "block"; 
     });
 
     document.getElementById("scoreboard").addEventListener("click", function() {
-        window.location.href = "../assests/ScoreBoard.html"; // Redirect to scoreboard
+        window.location.href = "../assests/ScoreBoard.html"; 
     });
 
     document.getElementById("exit").addEventListener("click", function() {
         sessionStorage.clear();
-        window.location.href = "../index.html"; // Redirect to home page
+        window.location.href = "../index.html"; 
     });
 });
