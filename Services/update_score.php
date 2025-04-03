@@ -1,43 +1,46 @@
 <?php
-session_start();
+session_start();  // Start the session to access session data
+require "config.php";  // Your database connection settings
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "quiz_game";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Enable error reporting for debugging
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $score = $_POST['score'];
+    // Get the username from session
+    $username = $_SESSION['username'] ?? '';  // Username stored in session
+    $score = $_POST['score'] ?? 0;
 
-    $sql = "SELECT * FROM users WHERE username = ?";
+    // Validate input
+    if ($username === '' || !is_numeric($score)) {
+        echo json_encode(["status" => "error", "message" => "Invalid input"]);
+        exit();
+    }
+
+    // Check if the user exists
+    $sql = "SELECT * FROM user WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $sql = "UPDATE users SET score = ? WHERE username = ?";
+        // User exists, update score
+        $sql = "UPDATE user SET score = ? WHERE username = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("is", $score, $username);
-    } else {
-        $sql = "INSERT INTO users (username, score) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("si", $username, $score);
-    }
 
-    if ($stmt->execute()) {
-        echo "Score updated successfully";
+        if ($stmt->execute()) {
+            echo json_encode(["status" => "success", "message" => "Score updated successfully"]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Error updating score"]);
+        }
     } else {
-        echo "Error updating score: " . $conn->error;
+        // If user doesn't exist, send error message
+        echo json_encode(["status" => "error", "message" => "User does not exist"]);
     }
 
     $stmt->close();
-    $conn->close();
+} else {
+    echo json_encode(["status" => "error", "message" => "Invalid request method"]);
 }
 ?>
