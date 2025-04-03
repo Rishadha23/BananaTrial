@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+    background: url("../Images/SB2.png") no-repeat center top; 
+    background-size: 650px 800px;
+    padding: 0;
+}
+
+/* Close button styling */
+#closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 454px;
+    background: red;
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+}
+
+#closeBtn:hover {
+    background: darkred;
+}
+
+/* Independent positioning for player text */
+#leaderboard {
+    font-size: 18px;
+    position: relative;
+    margin-top: 50px;
+}
+
+#leaderboard p {
+    font-family: 'Italiana', serif;
+    font-weight: bolder;
+}
+
+#player1 {
+    position: absolute;
+    top: 210px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(153, 132, 10);
+}
+
+#player2 {
+    position: absolute;
+    top: 290px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 25px;
+    color: rgba(119, 116, 116, 0.612);
+}
+
+#player3 {
+    position: absolute;
+    top: 370px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 25px;
+    color: brown;
+}
+
+#player4 {
+    position: absolute;
+    top: 454px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 25px;
+    color: white;
+}
