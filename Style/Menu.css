@@ -1,0 +1,130 @@
+/* Set a background image for the main page 
+body {
+    background: url('../Images/MenuBg.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
+}
+*/
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: lightgreen;
+    background: url("../Images/Menu5.png") no-repeat center top; 
+    background-size: 600px 800px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Modal styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal content */
+.modal-content {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: url("../Images/Modalbg.png") no-repeat center top; 
+    background-size: 500px 400px; /* Match the image size */
+    /* Set the modal width height same as image */
+    width: 500px;  
+    height: 400px; 
+    
+    margin: 10% auto; /* Centers the modal */
+    padding: 0; 
+    border-radius: 10px;
+    color: white;
+    position: relative;
+    
+}
+
+
+
+
+/* Close button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 50px;
+    color: rgb(228, 14, 14);
+    cursor: pointer;
+}
+
+/* General styles for clickable text */
+.clickable-text {
+    cursor: pointer;
+    font-size: 40px;
+    color: rgba(80, 88, 92, 0.94);
+    text-decoration: none;
+    display: block; 
+    text-align: center; 
+    font-family: 'Irish Grover', sans-serif; 
+}
+
+
+/* Adjust spacing for each element */
+#newGame {
+    margin-top: 220px;  
+    margin-bottom: 20px; 
+}
+
+#level {
+    margin-top: 30px;
+    margin-bottom: 10px; 
+}
+
+#scoreboard {
+    margin-top: 20px;
+    margin-bottom: 30px; 
+}
+
+#exit {
+    margin-top: 0px; 
+    font-weight: bold; 
+    
+}
+
+
+.difficulty-option {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 10px;
+    position: absolute;
+    margin-bottom: 10px; 
+    display: block; 
+    left: 46%;
+    transform: translateX(-50%);
+}
+
+
+/* Adjust positions of each difficulty option */
+#easy {
+    top: 100px; 
+}
+
+#medium {
+    top: 200px; 
+}
+
+#hard {
+    top: 300px; 
+}
+
+
+.difficulty-option:hover {
+    text-decoration: underline;
+}
