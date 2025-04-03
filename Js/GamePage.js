@@ -1,29 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
-    function getCookie(name) {
-        let cookies = document.cookie.split("; ");
-        for (let i = 0; i < cookies.length; i++) {
-            let [key, value] = cookies[i].split("=");
-            if (key === name) return decodeURIComponent(value);
-        }
-        return "";
+    let difficulty = sessionStorage.getItem("difficulty") || "Medium"; // Default to "Medium" if not found
+    console.log("Loaded Difficulty: ", difficulty); // Check if the difficulty is retrieved correctly
+
+    let timeLimit;
+    if (difficulty === "Hard") {
+        timeLimit = 20;  // Hard mode
+    } else if (difficulty === "Medium") {
+        timeLimit = 40;  // Medium mode
+    } else {
+        timeLimit = 60;  // Easy mode
     }
 
-    // Get the username and score from cookies
-    let username = getCookie("username");
-    if (!username) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Username not found. Please log in first.',
-        }).then(() => {
-            window.location.href = "../assests/login.html";
-        });
-        return;
-    }
-    document.getElementById("username").textContent = "Username: " + username;
-
-    let score = parseInt(getCookie("score")) || 0;
-    document.getElementById("score").textContent = "Score: " + score;
+    console.log("Time Limit Set: ", timeLimit); // Check the set time limit
 
     let timer, correctAnswer = 0, quizImageURL = "", timeExpired = false;
 
@@ -49,14 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Start quiz function
     async function startQuiz() {
-        // Read the difficulty from sessionStorage every time the function is called.
-        let difficulty = sessionStorage.getItem("difficulty") || "Medium";
-        let timeLimit = difficulty === "Hard" ? 20 : difficulty === "Medium" ? 40 : 60;
-
-        console.log("Start Quiz - Difficulty:", difficulty, "Time Limit:", timeLimit); 
-
-        clearInterval(timer); // Reset the previous timer
+        clearInterval(timer); // Reset the previous timer before starting a new quiz
         timeExpired = false;  // Reset timeExpired flag
+
+        // Clear previous input and set the timer
         document.getElementById("answer").value = "";  // Clear the previous answer input
         document.getElementById("time-left").textContent = timeLimit;  // Display time limit
 
@@ -64,10 +48,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Start the timer countdown
         timer = setInterval(() => {
-            if (timeExpired) return;
+            if (timeExpired) return;  // Prevent timer from running if time has expired
 
             timeLimit--;
-            document.getElementById("time-left").textContent = timeLimit;
+            document.getElementById("time-left").textContent = timeLimit; // Update the displayed timer
 
             if (timeLimit <= 0) {
                 clearInterval(timer);  // Stop the timer
@@ -82,11 +66,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         let difficulty = sessionStorage.getItem("difficulty") || "Medium";
                         timeLimit = difficulty === "Hard" ? 20 : difficulty === "Medium" ? 40 : 60;  
                         console.log("Timeout - Difficulty:", difficulty, "Time Limit:", timeLimit); 
-                        startQuiz();  
+                        startQuiz();  // Start the next quiz after timeout
                     }, 500);
                 });
             }
-        }, 1000);
+        }, 1000); // Countdown every second
     }
 
     // Handle answer submission
