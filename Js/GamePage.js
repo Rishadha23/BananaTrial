@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return "";
     }
 
-    // Fetch the token from cookies
+    // Fetch the token from cookies (for validating user session if needed)
     const token = getCookie("token");
 
     if (!token) {
@@ -135,11 +135,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.log("Username:", username);
                         console.log("Score:", score);
 
-                        // Update score in the database
+                        // Update score in the database (No Authorization Header)
                         fetch("../Services/update_score.php", {
                             method: "POST",
                             headers: {
-                                "Authorization": "Bearer " + token,  // Pass the token in the Authorization header
                                 "Content-Type": "application/x-www-form-urlencoded"
                             },
                             body: new URLSearchParams({
