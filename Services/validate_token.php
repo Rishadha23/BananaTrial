@@ -1,43 +1,35 @@
 <?php
+require "config.php";
 require "../libs/JWT.php";
 require "../libs/Key.php";
+
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 header("Content-Type: application/json");
 
-// Your secret key (should be kept private)
-$secret_key = "your_secret_key";
+// ✅ Get token from the Authorization header
+$headers = apache_request_headers();
+$authHeader = $headers["Authorization"] ?? '';
 
-// Fetch the token from the Authorization header or cookies
-$headers = getallheaders();
-$jwt = null;
-
-// Check if the Authorization header is present
-if (isset($headers["Authorization"])) {
-    $jwt = str_replace("Bearer ", "", $headers["Authorization"]);
-}
-// Alternatively, check if the JWT is in cookies
-elseif (isset($_COOKIE["token"])) {
-    $jwt = $_COOKIE["token"];
+if (!$authHeader || !str_starts_with($authHeader, "Bearer ")) {
+    echo json_encode(["success" => false, "message" => "Token not provided."]);
+    exit;
 }
 
-if (!$jwt) {
-    echo json_encode(["success" => false, "message" => "Unauthorized"]);
-    exit();
-}
+$token = str_replace("Bearer ", "", $authHeader);
+$secret_key = "your_secret_key"; // ✅ MUST match exactly with login.php
 
 try {
-    // Decode the JWT token
-    $decoded = JWT::decode($jwt, new Key($secret_key, "HS256"));
+    $decoded = JWT::decode($token, new Key($secret_key, "HS256"));
 
-    // Return the decoded data (username and score)
+    // Token is valid
     echo json_encode([
         "success" => true,
         "username" => $decoded->username,
         "score" => $decoded->score
     ]);
 } catch (Exception $e) {
-    echo json_encode(["success" => false, "message" => "Invalid token"]);
+    echo json_encode(["success" => false, "message" => "Invalid token", "error" => $e->getMessage()]);
 }
 ?>
