@@ -2,71 +2,56 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.querySelector("form");
 
     loginForm.addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault();
 
-        const emailInput = document.querySelector("input[name='email']");
-        const passwordInput = document.querySelector("input[name='pwd']");
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
+        const email = document.querySelector("input[name='email']").value.trim();
+        const password = document.querySelector("input[name='pwd']").value.trim();
 
-        // Validate email format
         if (!validateEmail(email)) {
             showAlert("Please enter a valid email address.", "error");
-            emailInput.focus();
             return;
         }
 
-        // Validate password (ensure it's not empty)
-        if (password.length === 0) {
+        if (password === "") {
             showAlert("Password cannot be empty.", "error");
-            passwordInput.focus();
             return;
         }
-
-        // Proceed with AJAX login request if validation passes
-        const formData = new FormData(loginForm);
 
         fetch("../Services/login.php", {
             method: "POST",
-            body: new FormData(document.querySelector("form"))
+            body: new FormData(loginForm)
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Store the JWT token
-                document.cookie = `token=${data.token}; path=/; secure; samesite=strict`;
-                
-                // Store username and score in session cookies (if needed for UI updates)
-                document.cookie = `username=${data.username}; path=/; secure; samesite=strict`;
-                document.cookie = `score=${data.score}; path=/; secure; samesite=strict`;
+                // ✅ Set cookies WITHOUT 'secure' for localhost
+                document.cookie = `token=${data.token}; path=/; SameSite=Strict`;
+                document.cookie = `username=${data.username}; path=/; SameSite=Strict`;
+                document.cookie = `score=${data.score}; path=/; SameSite=Strict`;
 
                 showAlert("Login successful!", "success", () => {
-                    window.location.href = "../assests/MainMenu.html";  
+                    // Add a tiny delay to ensure cookies are saved
+                    setTimeout(() => {
+                        window.location.href = "../assests/MainMenu.html";
+                    }, 300);
                 });
             } else {
-                showAlert(data.message || "Login failed! Please check your credentials.", "error");
+                showAlert(data.message || "Login failed.", "error");
             }
         });
     });
 
-    // Helper Function: Email Validation
     function validateEmail(email) {
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return emailPattern.test(email);
+        const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        return pattern.test(email.toLowerCase());
     }
 
-    // SweetAlert2 Function for Pop-up Messages
     function showAlert(message, type = "info", callback = null) {
         Swal.fire({
             title: message,
             icon: type,
-            timer: 3000,
-            showConfirmButton: false,
-            background: type === "success" ? "#d4edda" : type === "error" ? "#f8d7da" : "#cce5ff",
-            color: type === "success" ? "#155724" : type === "error" ? "#721c24" : "#004085",
-            customClass: {
-                popup: "custom-swal"
-            }
+            timer: 2000,
+            showConfirmButton: false
         }).then(() => {
             if (callback) callback();
         });

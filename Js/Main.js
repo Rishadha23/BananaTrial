@@ -1,13 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     
-    // Helper function to get cookie values by name taken by internet
     function getCookie(name) {
-        let cookies = document.cookie.split("; ");
-        for (let i = 0; i < cookies.length; i++) {
-            let [key, value] = cookies[i].split("=");
-            if (key === name) return decodeURIComponent(value);
+        const cookieArr = document.cookie.split("; ");
+        for (let i = 0; i < cookieArr.length; i++) {
+            const pair = cookieArr[i].split("=");
+            if (pair[0] === name) return decodeURIComponent(pair[1]);
         }
-        return "";
+        return null;
     }
 
     // Get the token from cookies
